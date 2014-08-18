@@ -7,11 +7,19 @@ feature 'Encrypt a cookie' do
 
   let(:app) do
 
+    GrapeCookies.configure do
+      secret_key_base 'secret base'
+    end
+
     Class.new(Grape::API) do
       include GrapeCookies::Ext::API
 
       get '/test' do
         cookies.signed['test_signed'] = '1234'
+        cookies['test_unsigned_signed'] = 'unsigned_1234'
+      end
+
+      get '/test_unsigned' do
         cookies['test_unsigned_signed'] = 'unsigned_1234'
       end
 
@@ -52,6 +60,13 @@ feature 'Encrypt a cookie' do
 
   end
 
+  scenario 'Cookie set unsigned' do
+    get '/test_unsigned'
+
+    expect(last_response.status).to eq 200
+    expect(response_cookies['test_unsigned_signed']).to eq 'unsigned_1234'
+  end
+
   scenario 'Get signed cookie' do
     get '/test'
 
@@ -66,5 +81,18 @@ feature 'Encrypt a cookie' do
     get '/return'
 
     expect(last_response.body).to eq '{:cookies=>["1234", "unsigned_1234"]}'
+  end
+
+  scenario 'Key base not set' do
+    app # initial app
+
+    # delete settings
+    GrapeCookies::Middleware::EnvSetup.reset_settings_for_env!
+    GrapeCookies.configure do
+      secret_key_base nil
+    end
+
+
+    expect{get '/test'}.to raise_error ArgumentError
   end
 end

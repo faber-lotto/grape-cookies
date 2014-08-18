@@ -5,7 +5,7 @@ module GrapeCookies
 
       module ClassMethods
         def settings
-          config_context.to_hash.freeze
+          config_context.to_hash
         end
 
         def configure(&block)

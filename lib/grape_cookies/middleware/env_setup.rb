@@ -1,27 +1,18 @@
 module GrapeCookies
   module Middleware
     class EnvSetup
-      include GrapeCookies::Configuration.module(
-                  :signed_cookie_salt,
-                  :encrypted_cookie_salt,
-                  :encrypted_signed_cookie_salt,
-                  :secret_token,
-                  :secret_key_base,
-                  :cookies_serializer
-              )
 
-      # setup defaults
-      configure do
-        signed_cookie_salt 'signed cookie'
-        encrypted_cookie_salt 'encrypted cookie'
-        encrypted_signed_cookie_salt 'signed encrypted cookie'
-        secret_token 'secret_token'
-        secret_key_base 'secret base'
-        cookies_serializer :json
+      def self.settings
+        GrapeCookies.settings
       end
 
       def self.key_generator
         @caching_key_generator ||= begin
+          if settings[:secret_key_base].blank?
+            raise ArgumentError, 'A secret is required to generate an integrity hash ' \
+                                 'for cookie session data. Set a secret_key_base.'
+          end
+
           key_generator = ActiveSupport::KeyGenerator.new(settings[:secret_key_base], iterations: 1000)
           ActiveSupport::CachingKeyGenerator.new(key_generator)
         end
@@ -37,6 +28,11 @@ module GrapeCookies
           ActionDispatch::Cookies::SECRET_KEY_BASE => settings[:secret_key_base],
           ActionDispatch::Cookies::COOKIES_SERIALIZER => settings[:cookies_serializer]
         }.freeze
+      end
+
+      def self.reset_settings_for_env!
+        @caching_key_generator = nil
+        @settings_for_env = nil
       end
 
       def initialize(app)

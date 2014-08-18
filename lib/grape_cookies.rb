@@ -11,6 +11,25 @@ module GrapeCookies
   require 'grape_cookies/ext/request'
   require 'grape_cookies/ext/api'
   require 'grape_cookies/ext/cookie_jar'
+
+  include GrapeCookies::Configuration.module(
+            :signed_cookie_salt,
+            :encrypted_cookie_salt,
+            :encrypted_signed_cookie_salt,
+            :secret_token,
+            :secret_key_base,
+            :cookies_serializer
+          )
+
+  # setup defaults
+  configure do
+    signed_cookie_salt 'signed cookie'
+    encrypted_cookie_salt 'encrypted cookie'
+    encrypted_signed_cookie_salt 'signed encrypted cookie'
+    secret_token 'secret_token'
+    secret_key_base nil || ENV['SECRET_KEY_BASE']
+    cookies_serializer :json
+  end
 end
 
 require 'grape'

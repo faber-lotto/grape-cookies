@@ -30,17 +30,16 @@ Or install it yourself as:
 
 ```ruby
 
+GrapeCookies.configure do
+  signed_cookie_salt 'signed cookie'
+  encrypted_cookie_salt 'encrypted cookie'
+  encrypted_signed_cookie_salt 'signed encrypted cookie'
+  secret_key_base 'secret base'
+  cookies_serializer :json
+end
+
 class API < Grape::API
   include GrapeCookies::Ext::API
-
-  GrapeCookies::Middleware::EnvSetup.configure do
-     signed_cookie_salt 'signed cookie'
-     encrypted_cookie_salt 'encrypted cookie'
-     encrypted_signed_cookie_salt 'signed encrypted cookie'
-     secret_token 'secret_token'
-     secret_key_base 'secret base'
-     cookies_serializer :json
-  end
   
   
   get '/test' do
@@ -51,6 +50,9 @@ class API < Grape::API
 end
 
 ```
+
+When `secret_key_base` is not set and a cookie is signed an `ArgumentError`
+will be thrown.
 
 ## Contributing
 
