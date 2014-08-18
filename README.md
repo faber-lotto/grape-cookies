@@ -50,6 +50,8 @@ class API < Grape::API
 
 end
 
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/faber-lotto/grape_cookies/fork )
