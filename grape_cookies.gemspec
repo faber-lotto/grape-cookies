@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['d.spaeth@faber.de']
   spec.summary       = 'Adds Rails like cookie support to grape api  '
   spec.description   = 'Adds Rails like cookie support to grape api  '
-  spec.homepage      = 'https://github.com/faber-lotto/grape_cookies'
+  spec.homepage      = 'https://github.com/faber-lotto/grape-cookies'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
