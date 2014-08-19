@@ -22,7 +22,7 @@ rescue LoadError
 end
 
 #########################################
-require 'grape_cookies'
+require 'cookies'
 #########################################
 
 Dir[File.join(File.expand_path(__dir__), 'support/**/*.rb')].each { |f| require f }

@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'grape_cookies/version'
+require 'grape/cookies/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'grape_cookies'
-  spec.version       = GrapeCookies::VERSION
+  spec.name          = 'grape-cookies'
+  spec.version       = Grape::Cookies::VERSION
   spec.authors       = ['Dieter Späth']
   spec.email         = ['d.spaeth@faber.de']
   spec.summary       = 'Adds Rails like cookie support to grape api  '

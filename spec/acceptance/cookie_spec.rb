@@ -7,12 +7,12 @@ feature 'Encrypt a cookie' do
 
   let(:app) do
 
-    GrapeCookies.configure do
+    Grape::Cookies.configure do
       secret_key_base 'secret base'
     end
 
     Class.new(Grape::API) do
-      include GrapeCookies::Ext::API
+      include Grape::Cookies::Ext::API
 
       get '/test' do
         cookies.signed['test_signed'] = '1234'
@@ -87,8 +87,8 @@ feature 'Encrypt a cookie' do
     app # initial app
 
     # delete settings
-    GrapeCookies::Middleware::EnvSetup.reset_settings_for_env!
-    GrapeCookies.configure do
+    Grape::Cookies::Middleware::EnvSetup.reset_settings_for_env!
+    Grape::Cookies.configure do
       secret_key_base nil
     end
 
