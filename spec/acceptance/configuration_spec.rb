@@ -3,7 +3,7 @@ require 'acceptance_spec_helper'
 feature 'Create a configuration with an DSL' do
   subject do
     Class.new do
-      include GrapeCookies::Configuration.module(:config1, :config2, config3: [:config4], config5: [config6: [:config7, :config8]])
+      include Grape::Cookies::Configuration.module(:config1, :config2, config3: [:config4], config5: [config6: [:config7, :config8]])
     end
   end
 

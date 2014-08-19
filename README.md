@@ -1,4 +1,4 @@
-# GrapeCookies  (Project-State: Proposal)
+# Grape::Cookies  (Project-State: Proposal)
                
 Make Rails cookie handling available for grape. `cookies` method 
 will return an `ActionDispatch::Cookies::CookieJar` instead of `Grape::Cookie`.
@@ -8,6 +8,7 @@ The following classes will be monkey patched:
 
 * `Grape::Endpoint`
 * `Grape::Request`
+* `Grape::Cookies` is deleted if it exists
 * `ActionDispatch::Cookies::CookieJar`
 
 
@@ -16,7 +17,7 @@ The following classes will be monkey patched:
 
 Add this line to your application's Gemfile:
 
-    gem 'grape_cookies'
+    gem 'grape-cookies'
 
 And then execute:
 
@@ -24,14 +25,14 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install grape_cookies
+    $ gem install grape-cookies
 
 ## Usage
 
 ```ruby
 
 # Only needed if you want to use signed cookies
-GrapeCookies.configure do
+Grape::Cookies.configure do
   signed_cookie_salt 'signed cookie'
   encrypted_cookie_salt 'encrypted cookie'
   encrypted_signed_cookie_salt 'signed encrypted cookie'
@@ -40,7 +41,7 @@ GrapeCookies.configure do
 end
 
 class API < Grape::API
-  include GrapeCookies::Ext::API
+  include Grape::Cookies::Ext::API
   
   
   get '/test' do
