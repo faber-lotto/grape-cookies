@@ -30,6 +30,7 @@ Or install it yourself as:
 
 ```ruby
 
+# Only needed if you want to use signed cookies
 GrapeCookies.configure do
   signed_cookie_salt 'signed cookie'
   encrypted_cookie_salt 'encrypted cookie'
